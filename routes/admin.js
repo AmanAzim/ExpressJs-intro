@@ -8,7 +8,7 @@ const products = [];
 
 routes.get('/add-product', (req, res, next) => {
     //res.sendFile(path.join(rootDir, 'views', 'add-product.html'));//For serving static html page
-    res.render('add-product', { docTitle: 'Add products'})
+    res.render('add-product', { docTitle: 'Add products', path: '/admin/add-product' });
 });
 
 routes.post('/add-product', (req, res, next) => {

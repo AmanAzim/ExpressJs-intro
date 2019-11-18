@@ -23,7 +23,7 @@ app.use(shopRoutes);
 
 app.use((req, res, next) => {//It will handle all unknown routes
     res.status(404).sendFile(path.join(rootDir, 'views', '404.html'));
-    res.status(404).render('404', { docTitle: '404'})
+    res.status(404).render('404', { docTitle: 'Page Not Found'});
 });
 /*
 app.use('/add-product', (req, res, next) => {

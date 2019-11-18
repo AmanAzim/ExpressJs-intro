@@ -4,8 +4,11 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
 
+app.set('view engine', 'pug');//"set" allows us to set any blobal value in our app. can be key-value.//Use "pug" as view creating engine
+app.set('views', 'views'); // Find the views from "views" directory.
+
 const rootDir = require('./util/path');
-const adminRoutes = require('./routes/admin');
+const adminData = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
 //parses the raw request body sent through <form>
@@ -14,12 +17,13 @@ app.use(bodyParser.urlencoded({extended: false}));
 //Serves static files such as css files// grant read access to static files// With this user can access the public folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/admin', adminRoutes);//only url with '/admin' will be handled by this route file
+app.use('/admin', adminData.routes);//only url with '/admin' will be handled by this route file
 
 app.use(shopRoutes);
 
 app.use((req, res, next) => {//It will handle all unknown routes
     res.status(404).sendFile(path.join(rootDir, 'views', '404.html'));
+    res.status(404).render('404', { docTitle: '404'})
 });
 /*
 app.use('/add-product', (req, res, next) => {

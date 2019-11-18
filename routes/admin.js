@@ -1,16 +1,19 @@
 const express = require('express');
 const path = require('path');
-const router = express.Router();//makes the middleware exportable
+const routes = express.Router();//makes the middleware exportable
 
 const rootDir = require('../util/path');
 
+const products = [];
 
-router.get('/add-product', (req, res, next) => {
-    res.sendFile(path.join(rootDir, 'views', 'add-product.html'));
+routes.get('/add-product', (req, res, next) => {
+    //res.sendFile(path.join(rootDir, 'views', 'add-product.html'));//For serving static html page
+    res.render('add-product', { docTitle: 'Add products'})
 });
 
-router.post('/add-product', (req, res, next) => {
-    //res.sendFile(path.join(__dirname, '../', 'views', 'add-product.html'));
+routes.post('/add-product', (req, res, next) => {
+    products.push({ title: req.body.title });
+    res.redirect('/');
 });
 
 /*
@@ -31,4 +34,7 @@ router.post('/add-product', (req, res, next) => {
 });
 */
 
-module.exports = router;
+//module.exports = router;
+
+exports.routes = routes;
+exports.products = products;
